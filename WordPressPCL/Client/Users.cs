@@ -98,9 +98,12 @@ namespace WordPressPCL.Client
         /// <param name="queryBuilder">Query builder with specific parameters</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of filtered result</returns>
-        public Task<IEnumerable<User>> Query(UsersQueryBuilder queryBuilder, bool useAuth = false)
+        public async Task<QueryResult<User>> Query(UsersQueryBuilder queryBuilder, bool useAuth = false)
         {
-            return _httpHelper.GetRequest<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}{queryBuilder.BuildQueryURL()}", false, useAuth);
+            var results = await _httpHelper.GetRequest<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}{queryBuilder.BuildQueryURL()}", false, useAuth);
+            int total = System.Convert.ToInt32(_httpHelper.LastResponseHeaders.GetValues("X-WP-Total").FirstOrDefault());
+            int totalpages = System.Convert.ToInt32(_httpHelper.LastResponseHeaders.GetValues("X-WP-TotalPages").FirstOrDefault());
+            return new QueryResult<User>(results, total, totalpages);
         }
 
         /// <summary>

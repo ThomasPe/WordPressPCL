@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WordPressPCL.Models;
 using WordPressPCL.Utility;
 
 namespace WordPressPCL.Interfaces
@@ -17,6 +18,6 @@ namespace WordPressPCL.Interfaces
         /// <param name="queryBuilder">query builder with parameters for query</param>
         /// <param name="useAuth">Is use auth header</param>
         /// <returns>list of filtered objects</returns>
-        Task<IEnumerable<TClass>> Query(QClass queryBuilder, bool useAuth = false);
+        Task<QueryResult<TClass>> Query(QClass queryBuilder, bool useAuth = false);
     }
 }

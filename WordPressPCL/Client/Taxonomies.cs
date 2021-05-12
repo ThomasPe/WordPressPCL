@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WordPressPCL.Interfaces;
 using WordPressPCL.Models;
@@ -78,7 +79,7 @@ namespace WordPressPCL.Client
         /// <param name="queryBuilder">Query builder with specific parameters</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of filtered result</returns>
-        public async Task<IEnumerable<Taxonomy>> Query(TaxonomiesQueryBuilder queryBuilder, bool useAuth = false)
+        public async Task<QueryResult<Taxonomy>> Query(TaxonomiesQueryBuilder queryBuilder, bool useAuth = false)
         {
             List<Taxonomy> entities = new List<Taxonomy>();
             var entities_dict = await _httpHelper.GetRequest<Dictionary<string, Taxonomy>>($"{_defaultPath}{_methodPath}{queryBuilder.BuildQueryURL()}", false, useAuth).ConfigureAwait(false);
@@ -86,7 +87,9 @@ namespace WordPressPCL.Client
             {
                 entities.Add(ent.Value);
             }
-            return entities;
+            int total = System.Convert.ToInt32(_httpHelper.LastResponseHeaders.GetValues("X-WP-Total").FirstOrDefault());
+            int totalpages = System.Convert.ToInt32(_httpHelper.LastResponseHeaders.GetValues("X-WP-TotalPages").FirstOrDefault());
+            return new QueryResult<Taxonomy>(entities, total, totalpages);
         }
     }
 }

@@ -610,6 +610,19 @@
             </summary>
             <returns>Current User</returns>
         </member>
+        <member name="M:WordPressPCL.rdPressPCL.Client.Users.Update(WordPressPCL.Models.User)">
+            <summary>
+            Update Entity
+            </summary>
+            <param name="Entity">Entity object</param>
+            <returns>Updated object</returns>
+        </member>
+        <member name="M:WordPressPCL.Client.Users.GetCurrentUser">
+            <summary>
+            Get current User
+            </summary>
+            <returns>Current User</returns>
+        </member>
         <member name="M:WordPressPCL.Client.Users.Delete(System.Int32,System.Int32)">
             <summary>
             Delete user with reassign articles
@@ -690,17 +703,7 @@
         <member name="M:WordPressPCL.Interfaces.IReadOperation`1.Get(System.Boolean,System.Boolean)">
             <summary>
             Get latest
-            </summary>
-            <param name="embed">Is use embed info</param>
-            <param name="useAuth">Is use auth header</param>
-            <returns>requested object</returns>
-        </member>
-        <member name="M:WordPressPCL.Interfaces.IReadOperation`1.GetByID(System.Object,System.Boolean,System.Boolean)">
-            <summary>
-            Get object by Id
-            </summary>
-            <param name="ID">Object Id</param>
-            <param name="embed">Is use embed info</param>
+            aram>
             <param name="useAuth">Is use auth header</param>
             <returns>requested object</returns>
         </member>
@@ -795,6 +798,22 @@
         <member name="P:WordPressPCL.Models.Base.Id">
             <summary>
             Unique identifier for the object.
+            </summary>
+            <remarks>
+            Read only
+            Context: view, edit, embed
+            </remarks>
+        </member>
+        <member name="T:WordPressPCL.Models.Category">
+            <summary>
+            Terms of the type category
+            </summary>
+        </member>
+        <member name="P:WordPressPCL.Models.Category.Count">
+            <summary>
+            Number of published posts for the term.
+            </summary>
+ dentifier for the object.
             </summary>
             <remarks>
             Read only
@@ -908,20 +927,7 @@
             <summary>
             The date the object was published.
             </summary>
-            <remarks>Context: view, edit, embed</remarks>
-        </member>
-        <member name="P:WordPressPCL.Models.Comment.DateGmt">
-            <summary>
-            The date the object was published as GMT.
-            </summary>
-            <remarks>Context: view, edit</remarks>
-        </member>
-        <member name="P:WordPressPCL.Models.Comment.Content">
-            <summary>
-            The content for the object.
-            <see cref="T:WordPressPCL.Models.Content"/>
-            </summary>
-            <remarks>Context: view, edit, embed</remarks>
+            <remarks>Context: view, edit,Context: view, edit, embed</remarks>
         </member>
         <member name="P:WordPressPCL.Models.Comment.Link">
             <summary>
@@ -2455,12 +2461,31 @@
         </member>
         <member name="P:WordPressPCL.Models.PostType.Links">
             <summary>
+         dels.PostType.Taxonomies">
+            <summary>
+            List of taxonomies
+            </summary>
+            <remarks>Context: edit</remarks>
+        </member>
+        <member name="P:WordPressPCL.Models.PostType.RestBase">
+            <summary>
+            REST base route for the taxonomy.
+            </summary>
+            <remarks>Context: view, edit, embed</remarks>
+        </member>
+        <member name="P:WordPressPCL.Models.PostType.Links">
+            <summary>
             Links to related resources
             </summary>
         </member>
         <member name="M:WordPressPCL.Models.PostType.#ctor">
             <summary>
             Default constructor
+            </summary>
+        </member>
+        <member name="T:WordPressPCL.Models.QueryResult`1">
+            <summary>
+            Base class for query results
             </summary>
         </member>
         <member name="T:WordPressPCL.Models.Settings">
@@ -3990,20 +4015,6 @@
             <param name="token"></param>
         </member>
         <member name="M:WordPressPCL.WordPressClient.GetToken">
-            <summary>
-            Gets the JWToken from the client
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:WordPressPCL.WordPressClient.SetApplicationPassword(System.String)">
-            <summary>
-            Store Application Password in the Client
-            </summary>
-            <param name="applictionPassword"></param>
-        </member>
-    </members>
-</doc>
-   <member name="M:WordPressPCL.WordPressClient.GetToken">
             <summary>
             Gets the JWToken from the client
             </summary>
