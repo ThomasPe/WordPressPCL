@@ -22,7 +22,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task PostTypes_Read()
         {
-            var posttypes = await _clientAuth.PostTypes.GetAll();
+            var posttypes = await _clientAuth.PostTypes.GetAllAsync();
             Assert.IsNotNull(posttypes);
             Assert.AreNotEqual(posttypes.Count(), 0);
         }
@@ -30,7 +30,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task PostTypes_Get()
         {
-            var posttypes = await _clientAuth.PostTypes.Get();
+            var posttypes = await _clientAuth.PostTypes.GetAsync();
             Assert.IsNotNull(posttypes);
             Assert.AreNotEqual(posttypes.Count(), 0);
         }

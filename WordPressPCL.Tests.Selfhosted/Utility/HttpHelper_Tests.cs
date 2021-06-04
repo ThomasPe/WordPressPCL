@@ -24,7 +24,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
             // Create a random tag , must works:
             var random = new Random();
             var tagname = $"Test {random.Next(0, 1000)}";
-            var tag = await _clientAuth.Tags.Create(new Tag()
+            var tag = await _clientAuth.Tags.CreateAsync(new Tag()
             {
                 Name = tagname,
                 Description = "Test Description"
@@ -35,7 +35,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
             Assert.AreEqual("Test Description", tag.Description);
 
             // We call Get tag list without pre processing
-            var tags = await _clientAuth.Tags.GetAll();
+            var tags = await _clientAuth.Tags.GetAllAsync();
             Assert.IsNotNull(tags);
             Assert.AreNotEqual(tags.Count(), 0);
             CollectionAssert.AllItemsAreUnique(tags.Select(e => e.Id).ToList());
@@ -47,7 +47,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
             };
             await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () =>
             {
-                await _clientAuth.Tags.GetAll();
+                await _clientAuth.Tags.GetAllAsync();
             });
             _clientAuth.HttpResponsePreProcessing = null;
         }
@@ -60,7 +60,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
             // Create a random tag
             var random = new Random();
             var tagname = $"Test {random.Next(0, 1000)}";
-            var tag = await _clientAuth.Tags.Create(new Tag()
+            var tag = await _clientAuth.Tags.CreateAsync(new Tag()
             {
                 Name = tagname,
                 Description = "Test Description"
@@ -71,7 +71,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
             Assert.AreEqual("Test Description", tag.Description);
 
             // We call Get tag list without pre processing
-            var tags = await _clientAuth.Tags.GetAll();
+            var tags = await _clientAuth.Tags.GetAllAsync();
             Assert.IsNotNull(tags);
             Assert.AreNotEqual(tags.Count(), 0);
             CollectionAssert.AllItemsAreUnique(tags.Select(e => e.Id).ToList());
@@ -82,7 +82,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
                 return response;
             };
 
-            tags = await _clientAuth.Tags.GetAll();
+            tags = await _clientAuth.Tags.GetAllAsync();
             Assert.IsNotNull(tags);
             Assert.AreNotEqual(tags.Count(), 0);
             CollectionAssert.AllItemsAreUnique(tags.Select(e => e.Id).ToList());

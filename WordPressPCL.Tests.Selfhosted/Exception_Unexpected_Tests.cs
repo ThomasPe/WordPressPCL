@@ -21,13 +21,13 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Tags_Get_UnexpectedException()
         {
-            await CheckForUnexpectedException(async () => await _badConnectionClient.Tags.Get());
+            await CheckForUnexpectedException(async () => await _badConnectionClient.Tags.GetAsync());
         }
 
         [TestMethod]
         public async Task Tags_Post_UnexpectedException()
         {
-            await CheckForUnexpectedException(async () => await _badConnectionClient.Tags.Update(new Tag()));
+            await CheckForUnexpectedException(async () => await _badConnectionClient.Tags.UpdateAsync(new Tag()));
         }
 
         [TestMethod]

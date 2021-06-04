@@ -24,13 +24,13 @@ namespace WordPressPCL.Tests.Selfhosted
             httpClient.DefaultRequestHeaders.Add("Referer", "https://github.com/wp-net/WordPressPCL");
 
             var client = new WordPressClient(httpClient);
-            var posts = await client.Posts.GetAll();
+            var posts = await client.Posts.GetAllAsync();
             var post = await client.Posts.GetByID(posts.First().Id);
             Assert.IsTrue(posts.First().Id == post.Id);
             Assert.IsTrue(!string.IsNullOrEmpty(posts.First().Content.Rendered));
 
-            await client.RequestJWToken(ApiCredentials.Username, ApiCredentials.Password);
-            var validToken = await client.IsValidJWToken();
+            await client.RequestJWTokenAsync(ApiCredentials.Username, ApiCredentials.Password);
+            var validToken = await client.IsValidJWTokenAsync();
             Assert.IsTrue(validToken);
         }
     }

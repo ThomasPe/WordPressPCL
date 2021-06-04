@@ -63,11 +63,11 @@ namespace WordPressPCL.Client
         /// </summary>
         /// <param name="Entity">Entity object</param>
         /// <returns>Created object</returns>
-        public async Task<TClass> Create(TClass Entity)
+        public async Task<TClass> CreateAsync(TClass Entity)
         {
             var entity = HttpHelper.JsonSerializerSettings == null ? JsonConvert.SerializeObject(Entity) : JsonConvert.SerializeObject(Entity, HttpHelper.JsonSerializerSettings);
             var postBody = new StringContent(entity, Encoding.UTF8, "application/json");
-            return (await HttpHelper.PostRequest<TClass>($"{DefaultPath}{MethodPath}", postBody).ConfigureAwait(false)).Item1;
+            return (await HttpHelper.PostRequestAsync<TClass>($"{DefaultPath}{MethodPath}", postBody).ConfigureAwait(false)).Item1;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace WordPressPCL.Client
         /// <returns>Result of operation</returns>
         public Task<bool> Delete(int ID)
         {
-            return HttpHelper.DeleteRequest($"{DefaultPath}{MethodPath}/{ID}" + (ForceDeletion ? "?force=true" : string.Empty));
+            return HttpHelper.DeleteRequestAsync($"{DefaultPath}{MethodPath}/{ID}" + (ForceDeletion ? "?force=true" : string.Empty));
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace WordPressPCL.Client
         /// <param name="embed">include embed info</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>Entity by Id</returns>
-        public Task<IEnumerable<TClass>> Get(bool embed = false, bool useAuth = false)
+        public Task<IEnumerable<TClass>> GetAsync(bool embed = false, bool useAuth = false)
         {
-            return HttpHelper.GetRequest<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}", embed, useAuth);
+            return HttpHelper.GetRequestAsync<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}", embed, useAuth);
         }
 
         /// <summary>
@@ -97,17 +97,17 @@ namespace WordPressPCL.Client
         /// <param name="embed">Include embed info</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of all result</returns>
-        public async Task<IEnumerable<TClass>> GetAll(bool embed = false, bool useAuth = false)
+        public async Task<IEnumerable<TClass>> GetAllAsync(bool embed = false, bool useAuth = false)
         {
             //100 - Max posts per page in WordPress REST API, so this is hack with multiple requests
             List<TClass> entities;
-            entities = (await HttpHelper.GetRequest<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}?per_page=100&page=1", embed, useAuth).ConfigureAwait(false))?.ToList<TClass>();
+            entities = (await HttpHelper.GetRequestAsync<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}?per_page=100&page=1", embed, useAuth).ConfigureAwait(false))?.ToList<TClass>();
             if (HttpHelper.LastResponseHeaders.Contains("X-WP-TotalPages") && System.Convert.ToInt32(HttpHelper.LastResponseHeaders.GetValues("X-WP-TotalPages").FirstOrDefault()) > 1)
             {
                 int totalpages = System.Convert.ToInt32(HttpHelper.LastResponseHeaders.GetValues("X-WP-TotalPages").FirstOrDefault());
                 for (int page = 2; page <= totalpages; page++)
                 {
-                    entities.AddRange((await HttpHelper.GetRequest<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}?per_page=100&page={page}", embed, useAuth).ConfigureAwait(false))?.ToList<TClass>());
+                    entities.AddRange((await HttpHelper.GetRequestAsync<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}?per_page=100&page={page}", embed, useAuth).ConfigureAwait(false))?.ToList<TClass>());
                 }
             }
             return entities;
@@ -122,7 +122,7 @@ namespace WordPressPCL.Client
         /// <returns>Entity by Id</returns>
         public Task<TClass> GetByID(object ID, bool embed = false, bool useAuth = false)
         {
-            return HttpHelper.GetRequest<TClass>($"{DefaultPath}{MethodPath}/{ID}", embed, useAuth);
+            return HttpHelper.GetRequestAsync<TClass>($"{DefaultPath}{MethodPath}/{ID}", embed, useAuth);
         }
 
         /// <summary>
@@ -131,9 +131,9 @@ namespace WordPressPCL.Client
         /// <param name="queryBuilder">Query builder with specific parameters</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of filtered result</returns>
-        public Task<IEnumerable<TClass>> Query(QClass queryBuilder, bool useAuth = false)
+        public Task<IEnumerable<TClass>> QueryAsync(QClass queryBuilder, bool useAuth = false)
         {
-            return HttpHelper.GetRequest<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}{queryBuilder.BuildQueryURL()}", false, useAuth);
+            return HttpHelper.GetRequestAsync<IEnumerable<TClass>>($"{DefaultPath}{MethodPath}{queryBuilder.BuildQueryURL()}", false, useAuth);
         }
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace WordPressPCL.Client
         /// </summary>
         /// <param name="Entity">Entity object</param>
         /// <returns>Updated object</returns>
-        public async Task<TClass> Update(TClass Entity)
+        public async Task<TClass> UpdateAsync(TClass Entity)
         {
             var entity = HttpHelper.JsonSerializerSettings == null ? JsonConvert.SerializeObject(Entity) : JsonConvert.SerializeObject(Entity, HttpHelper.JsonSerializerSettings);
             var postBody = new StringContent(entity, Encoding.UTF8, "application/json");
-            return (await HttpHelper.PostRequest<TClass>($"{DefaultPath}{MethodPath}/{(Entity as Base)?.Id}", postBody).ConfigureAwait(false)).Item1;
+            return (await HttpHelper.PostRequestAsync<TClass>($"{DefaultPath}{MethodPath}/{(Entity as Base)?.Id}", postBody).ConfigureAwait(false)).Item1;
         }
     }
 }

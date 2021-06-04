@@ -34,7 +34,7 @@ namespace WordPressPCL.Tests.Selfhosted
             var password = $"testpassword{username}";
             var name = $"{firstname} {lastname}";
 
-            var user = await _clientAuth.Users.Create(new User(username, email, password)
+            var user = await _clientAuth.Users.CreateAsync(new User(username, email, password)
             {
                 NickName = nickname,
                 Name = name,
@@ -53,7 +53,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Users_Read()
         {
-            var users = await _client.Users.GetAll();
+            var users = await _client.Users.GetAllAsync();
             Assert.IsNotNull(users);
             Assert.IsTrue(users.Count() >= 1);
             var user = await _client.Users.GetByID(users.First().Id);
@@ -64,7 +64,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Users_Get()
         {
-            var users = await _client.Users.Get();
+            var users = await _client.Users.GetAsync();
             Assert.IsNotNull(users);
             Assert.IsTrue(users.Count() >= 1);
             var user = await _client.Users.GetByID(users.First().Id);
@@ -84,7 +84,7 @@ namespace WordPressPCL.Tests.Selfhosted
             user.FirstName = name;
             user.LastName = name;
 
-            var updatedUser = await _clientAuth.Users.Update(user);
+            var updatedUser = await _clientAuth.Users.UpdateAsync(user);
             Assert.IsNotNull(updatedUser);
             Assert.AreEqual(updatedUser.Name, name);
             Assert.AreEqual(updatedUser.NickName, name);
@@ -118,7 +118,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Content = new Content("Content PostCreate"),
                 Author = user1.Id
             };
-            var postCreated = await _clientAuth.Posts.Create(post);
+            var postCreated = await _clientAuth.Posts.CreateAsync(post);
             Assert.IsNotNull(post);
             Assert.AreEqual(postCreated.Author, user1.Id);
 
@@ -145,7 +145,7 @@ namespace WordPressPCL.Tests.Selfhosted
             };
             Assert.AreEqual("?page=1&per_page=15&orderby=registered_date&order=desc&context=edit", queryBuilder.BuildQueryURL());
 
-            var queryresult = await _clientAuth.Users.Query(queryBuilder, true);
+            var queryresult = await _clientAuth.Users.QueryAsync(queryBuilder, true);
             Assert.IsNotNull(queryresult);
             Assert.AreNotSame(queryresult.Count(), 0);
         }
@@ -157,7 +157,7 @@ namespace WordPressPCL.Tests.Selfhosted
             var username = Guid.NewGuid().ToString();
             var email = $"{username}@test.com";
             var password = $"testpassword{username}";
-            return _clientAuth.Users.Create(new User(username, email, password));
+            return _clientAuth.Users.CreateAsync(new User(username, email, password));
         }
 
         #endregion Utils

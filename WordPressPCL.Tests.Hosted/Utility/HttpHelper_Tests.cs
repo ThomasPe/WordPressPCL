@@ -23,12 +23,12 @@ namespace WordPressPCL.Tests.Hosted.Utility
             {
                 AuthMethod = AuthMethod.JWT
             };
-            await client.RequestJWToken(ApiCredentials.Username, ApiCredentials.Password);
+            await client.RequestJWTokenAsync(ApiCredentials.Username, ApiCredentials.Password);
 
             // Create a random tag , must works:
             var random = new Random();
             var tagname = $"Test {random.Next(0, 1000)}";
-            var tag = await client.Tags.Create(new Tag()
+            var tag = await client.Tags.CreateAsync(new Tag()
             {
                 Name = tagname,
                 Description = "Test Description"
@@ -39,7 +39,7 @@ namespace WordPressPCL.Tests.Hosted.Utility
             Assert.AreEqual("Test Description", tag.Description);
 
             // We call Get tag list without pre processing
-            var tags = await client.Tags.GetAll();
+            var tags = await client.Tags.GetAllAsync();
             Assert.IsNotNull(tags);
             Assert.AreNotEqual(tags.Count(), 0);
             CollectionAssert.AllItemsAreUnique(tags.Select(e => e.Id).ToList());
@@ -51,7 +51,7 @@ namespace WordPressPCL.Tests.Hosted.Utility
             };
             await Assert.ThrowsExceptionAsync<InvalidOperationException>(async () =>
             {
-                await client.Tags.GetAll();
+                await client.Tags.GetAllAsync();
             });
         }
 
@@ -62,12 +62,12 @@ namespace WordPressPCL.Tests.Hosted.Utility
             {
                 AuthMethod = AuthMethod.JWT
             };
-            await client.RequestJWToken(ApiCredentials.Username, ApiCredentials.Password);
+            await client.RequestJWTokenAsync(ApiCredentials.Username, ApiCredentials.Password);
 
             // Create a random tag
             var random = new Random();
             var tagname = $"Test {random.Next(0, 1000)}";
-            var tag = await client.Tags.Create(new Tag()
+            var tag = await client.Tags.CreateAsync(new Tag()
             {
                 Name = tagname,
                 Description = "Test Description"
@@ -78,7 +78,7 @@ namespace WordPressPCL.Tests.Hosted.Utility
             Assert.AreEqual("Test Description", tag.Description);
 
             // We call Get tag list without pre processing
-            var tags = await client.Tags.GetAll();
+            var tags = await client.Tags.GetAllAsync();
             Assert.IsNotNull(tags);
             Assert.AreNotEqual(tags.Count(), 0);
             CollectionAssert.AllItemsAreUnique(tags.Select(e => e.Id).ToList());
@@ -89,7 +89,7 @@ namespace WordPressPCL.Tests.Hosted.Utility
                 return response;
             };
 
-            tags = await client.Tags.GetAll();
+            tags = await client.Tags.GetAllAsync();
             Assert.IsNotNull(tags);
             Assert.AreNotEqual(tags.Count(), 0);
             CollectionAssert.AllItemsAreUnique(tags.Select(e => e.Id).ToList());

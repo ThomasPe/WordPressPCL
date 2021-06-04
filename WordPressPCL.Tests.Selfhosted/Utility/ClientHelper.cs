@@ -21,7 +21,7 @@ namespace WordPressPCL.Tests.Selfhosted.Utility
             {
                 clientAuth.AuthMethod = AuthMethod.JWT;
             }
-            await clientAuth.RequestJWToken(ApiCredentials.Username, ApiCredentials.Password);
+            await clientAuth.RequestJWTokenAsync(ApiCredentials.Username, ApiCredentials.Password);
 
             return clientAuth;
         }

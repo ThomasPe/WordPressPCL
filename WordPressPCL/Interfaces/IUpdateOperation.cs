@@ -13,6 +13,6 @@ namespace WordPressPCL.Interfaces
         /// </summary>
         /// <param name="Entity">object to update</param>
         /// <returns>Updated entity</returns>
-        Task<TClass> Update(TClass Entity);
+        Task<TClass> UpdateAsync(TClass Entity);
     }
 }

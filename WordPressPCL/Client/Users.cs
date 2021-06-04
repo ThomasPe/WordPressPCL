@@ -40,11 +40,11 @@ namespace WordPressPCL.Client
         /// </summary>
         /// <param name="Entity">Entity object</param>
         /// <returns>Created object</returns>
-        public virtual async Task<User> Create(User Entity)
+        public virtual async Task<User> CreateAsync(User Entity)
         {
             var entity = _httpHelper.JsonSerializerSettings == null ? JsonConvert.SerializeObject(Entity) : JsonConvert.SerializeObject(Entity, _httpHelper.JsonSerializerSettings);
             var postBody = new StringContent(entity, Encoding.UTF8, "application/json");
-            return (await _httpHelper.PostRequest<User>($"{_defaultPath}{METHOD_PATH}", postBody).ConfigureAwait(false)).Item1;
+            return (await _httpHelper.PostRequestAsync<User>($"{_defaultPath}{METHOD_PATH}", postBody).ConfigureAwait(false)).Item1;
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace WordPressPCL.Client
         /// <param name="embed">include embed info</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>Get latest users</returns>
-        public Task<IEnumerable<User>> Get(bool embed = false, bool useAuth = false)
+        public Task<IEnumerable<User>> GetAsync(bool embed = false, bool useAuth = false)
         {
-            return _httpHelper.GetRequest<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}", embed, useAuth);
+            return _httpHelper.GetRequestAsync<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}", embed, useAuth);
         }
 
         /// <summary>
@@ -64,17 +64,17 @@ namespace WordPressPCL.Client
         /// <param name="embed">Include embed info</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of all result</returns>
-        public async Task<IEnumerable<User>> GetAll(bool embed = false, bool useAuth = false)
+        public async Task<IEnumerable<User>> GetAllAsync(bool embed = false, bool useAuth = false)
         {
             //100 - Max posts per page in WordPress REST API, so this is hack with multiple requests
             List<User> entities = new List<User>();
-            entities = (await _httpHelper.GetRequest<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}?per_page=100&page=1", embed, useAuth).ConfigureAwait(false))?.ToList<User>();
+            entities = (await _httpHelper.GetRequestAsync<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}?per_page=100&page=1", embed, useAuth).ConfigureAwait(false))?.ToList<User>();
             if (_httpHelper.LastResponseHeaders.Contains("X-WP-TotalPages") && System.Convert.ToInt32(_httpHelper.LastResponseHeaders.GetValues("X-WP-TotalPages").FirstOrDefault()) > 1)
             {
                 int totalpages = System.Convert.ToInt32(_httpHelper.LastResponseHeaders.GetValues("X-WP-TotalPages").FirstOrDefault());
                 for (int page = 2; page <= totalpages; page++)
                 {
-                    entities.AddRange((await _httpHelper.GetRequest<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}?per_page=100&page={page}", embed, useAuth).ConfigureAwait(false))?.ToList<User>());
+                    entities.AddRange((await _httpHelper.GetRequestAsync<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}?per_page=100&page={page}", embed, useAuth).ConfigureAwait(false))?.ToList<User>());
                 }
             }
             return entities;
@@ -89,7 +89,7 @@ namespace WordPressPCL.Client
         /// <returns>Entity by Id</returns>
         public Task<User> GetByID(object ID, bool embed = false, bool useAuth = false)
         {
-            return _httpHelper.GetRequest<User>($"{_defaultPath}{METHOD_PATH}/{ID}", embed, useAuth);
+            return _httpHelper.GetRequestAsync<User>($"{_defaultPath}{METHOD_PATH}/{ID}", embed, useAuth);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace WordPressPCL.Client
         /// <param name="queryBuilder">Query builder with specific parameters</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of filtered result</returns>
-        public Task<IEnumerable<User>> Query(UsersQueryBuilder queryBuilder, bool useAuth = false)
+        public Task<IEnumerable<User>> QueryAsync(UsersQueryBuilder queryBuilder, bool useAuth = false)
         {
-            return _httpHelper.GetRequest<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}{queryBuilder.BuildQueryURL()}", false, useAuth);
+            return _httpHelper.GetRequestAsync<IEnumerable<User>>($"{_defaultPath}{METHOD_PATH}{queryBuilder.BuildQueryURL()}", false, useAuth);
         }
 
         /// <summary>
@@ -108,11 +108,11 @@ namespace WordPressPCL.Client
         /// </summary>
         /// <param name="Entity">Entity object</param>
         /// <returns>Updated object</returns>
-        public async Task<User> Update(User Entity)
+        public async Task<User> UpdateAsync(User Entity)
         {
             var entity = _httpHelper.JsonSerializerSettings == null ? JsonConvert.SerializeObject(Entity) : JsonConvert.SerializeObject(Entity, _httpHelper.JsonSerializerSettings);
             var postBody = new StringContent(entity, Encoding.UTF8, "application/json");
-            return (await _httpHelper.PostRequest<User>($"{_defaultPath}{METHOD_PATH}/{(Entity as Base)?.Id}", postBody).ConfigureAwait(false)).Item1;
+            return (await _httpHelper.PostRequestAsync<User>($"{_defaultPath}{METHOD_PATH}/{(Entity as Base)?.Id}", postBody).ConfigureAwait(false)).Item1;
         }
 
         #region Custom
@@ -123,7 +123,7 @@ namespace WordPressPCL.Client
         /// <returns>Current User</returns>
         public Task<User> GetCurrentUser()
         {
-            return _httpHelper.GetRequest<User>($"{_defaultPath}{METHOD_PATH}/me", true, true);
+            return _httpHelper.GetRequestAsync<User>($"{_defaultPath}{METHOD_PATH}/me", true, true);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace WordPressPCL.Client
         /// <returns>Result of operation</returns>
         public Task<bool> Delete(int ID, int ReassignUserID)
         {
-            return _httpHelper.DeleteRequest($"{_defaultPath}{METHOD_PATH}/{ID}?force=true&reassign={ReassignUserID}");
+            return _httpHelper.DeleteRequestAsync($"{_defaultPath}{METHOD_PATH}/{ID}?force=true&reassign={ReassignUserID}");
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace WordPressPCL.Client
         /// <returns>Result of operation</returns>
         public Task<bool> Delete(int ID, User ReassignUser)
         {
-            return _httpHelper.DeleteRequest($"{_defaultPath}{METHOD_PATH}/{ID}?force=true&reassign={ReassignUser.Id}");
+            return _httpHelper.DeleteRequestAsync($"{_defaultPath}{METHOD_PATH}/{ID}?force=true&reassign={ReassignUser.Id}");
         }
 
         #endregion Custom
@@ -158,12 +158,12 @@ namespace WordPressPCL.Client
         /// <param name="applicationName">User-defined name for application</param>
         /// <param name="userId">User ID, defaults to "me"</param>
         /// <returns></returns>
-        public async Task<ApplicationPassword> CreateApplicationPassword(string applicationName, string userId = "me")
+        public async Task<ApplicationPassword> CreateApplicationPasswordAsync(string applicationName, string userId = "me")
         {
             var body = new { name = applicationName };
             var entity = _httpHelper.JsonSerializerSettings == null ? JsonConvert.SerializeObject(body) : JsonConvert.SerializeObject(body, _httpHelper.JsonSerializerSettings);
             var postBody = new StringContent(entity, Encoding.UTF8, "application/json");
-            return (await _httpHelper.PostRequest<ApplicationPassword>($"{_defaultPath}{METHOD_PATH}/{userId}/{APPLICATION_PASSWORDS_PATH}", postBody, true).ConfigureAwait(false)).Item1;
+            return (await _httpHelper.PostRequestAsync<ApplicationPassword>($"{_defaultPath}{METHOD_PATH}/{userId}/{APPLICATION_PASSWORDS_PATH}", postBody, true).ConfigureAwait(false)).Item1;
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace WordPressPCL.Client
         /// <returns>List of registered Application Passwords (without the actual password)</returns>
         public Task<List<ApplicationPassword>> GetApplicationPasswords(string userId = "me")
         {
-            return _httpHelper.GetRequest<List<ApplicationPassword>>($"{_defaultPath}{METHOD_PATH}/{userId}/{APPLICATION_PASSWORDS_PATH}", false, true);
+            return _httpHelper.GetRequestAsync<List<ApplicationPassword>>($"{_defaultPath}{METHOD_PATH}/{userId}/{APPLICATION_PASSWORDS_PATH}", false, true);
         }
 
         #endregion

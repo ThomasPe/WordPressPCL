@@ -17,6 +17,6 @@ namespace WordPressPCL.Interfaces
         /// <param name="queryBuilder">query builder with parameters for query</param>
         /// <param name="useAuth">Is use auth header</param>
         /// <returns>list of filtered objects</returns>
-        Task<IEnumerable<TClass>> Query(QClass queryBuilder, bool useAuth = false);
+        Task<IEnumerable<TClass>> QueryAsync(QClass queryBuilder, bool useAuth = false);
     }
 }

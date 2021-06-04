@@ -13,6 +13,6 @@ namespace WordPressPCL.Interfaces
         /// </summary>
         /// <param name="Entity">object to create</param>
         /// <returns>Created object</returns>
-        Task<TClass> Create(TClass Entity);
+        Task<TClass> CreateAsync(TClass Entity);
     }
 }

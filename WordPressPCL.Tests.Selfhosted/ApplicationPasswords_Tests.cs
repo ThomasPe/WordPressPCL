@@ -25,14 +25,14 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Application_Passwords_Create()
         {
-            var password = await _clientAuth.Users.CreateApplicationPassword(System.Guid.NewGuid().ToString());
+            var password = await _clientAuth.Users.CreateApplicationPasswordAsync(System.Guid.NewGuid().ToString());
             Assert.IsNotNull(password.Password);
         }
 
         [TestMethod]
         public async Task Read()
         {
-            await _clientAuth.Users.CreateApplicationPassword(System.Guid.NewGuid().ToString());
+            await _clientAuth.Users.CreateApplicationPasswordAsync(System.Guid.NewGuid().ToString());
             var passwords = await _clientAuth.Users.GetApplicationPasswords();
 
             Assert.IsNotNull(passwords);
@@ -51,7 +51,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 return;
             }
             Console.WriteLine("Run App Password Test");
-            var appPassword = await _clientAuth.Users.CreateApplicationPassword(System.Guid.NewGuid().ToString());
+            var appPassword = await _clientAuth.Users.CreateApplicationPasswordAsync(System.Guid.NewGuid().ToString());
             var appPasswordClient = new WordPressClient(ApiCredentials.WordPressUri)
             {
                 AuthMethod = AuthMethod.ApplicationPassword,
@@ -64,7 +64,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Title = new Title("Title 1"),
                 Content = new Content("Content PostCreate")
             };
-            var postCreated = await appPasswordClient.Posts.Create(post);
+            var postCreated = await appPasswordClient.Posts.CreateAsync(post);
             Assert.IsNotNull(postCreated);
             Assert.AreEqual("Title 1", postCreated.Title.Raw);
         }

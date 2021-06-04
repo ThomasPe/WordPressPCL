@@ -244,6 +244,9 @@ ModelManifest.xml
 # Paket dependency manager
 .paket/paket.exe
 
+# JetBrains Rider
+.idea/
+
 # FAKE - F# Make
 .fake/
 WordPressPCLTests/Utility/ApiCredentials.cs

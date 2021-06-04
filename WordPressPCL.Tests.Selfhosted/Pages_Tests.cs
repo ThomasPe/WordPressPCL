@@ -30,7 +30,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Title = new Title("Title 1"),
                 Content = new Content("Content PostCreate")
             };
-            var createdPage = await _clientAuth.Pages.Create(page);
+            var createdPage = await _clientAuth.Pages.CreateAsync(page);
 
             Assert.AreEqual(page.Content.Raw, createdPage.Content.Raw);
             Assert.IsTrue(createdPage.Content.Rendered.Contains(page.Content.Rendered));
@@ -39,7 +39,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Pages_Read()
         {
-            var pages = await _client.Pages.Query(new PagesQueryBuilder());
+            var pages = await _client.Pages.QueryAsync(new PagesQueryBuilder());
             Assert.IsNotNull(pages);
             Assert.AreNotEqual(pages.Count(), 0);
         }
@@ -47,7 +47,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Pages_Get()
         {
-            var pages = await _client.Pages.Get();
+            var pages = await _client.Pages.GetAsync();
             Assert.IsNotNull(pages);
             Assert.AreNotEqual(pages.Count(), 0);
         }
@@ -56,12 +56,12 @@ namespace WordPressPCL.Tests.Selfhosted
         public async Task Pages_Update()
         {
             var testContent = "Test" + new Random().Next();
-            var pages = await _client.Pages.GetAll();
+            var pages = await _client.Pages.GetAllAsync();
             Assert.IsTrue(pages.Count() > 0);
 
             var page = pages.FirstOrDefault();
             page.Content.Raw = testContent;
-            var updatedPage = await _clientAuth.Pages.Update(page);
+            var updatedPage = await _clientAuth.Pages.UpdateAsync(page);
             Assert.AreEqual(testContent, updatedPage.Content.Raw);
         }
 
@@ -74,7 +74,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Title = new Title("Title 1"),
                 Content = new Content("Content PostCreate")
             };
-            var createdPage = await _clientAuth.Pages.Create(page);
+            var createdPage = await _clientAuth.Pages.CreateAsync(page);
             Assert.IsNotNull(createdPage);
 
             var response = await _clientAuth.Pages.Delete(createdPage.Id);
@@ -97,7 +97,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Statuses = new Status[] { Status.Publish },
                 Embed = true
             };
-            var queryresult = await _client.Pages.Query(queryBuilder);
+            var queryresult = await _client.Pages.QueryAsync(queryBuilder);
             Assert.AreEqual("?page=1&per_page=15&orderby=title&status=publish&order=asc&_embed=true&context=view", queryBuilder.BuildQueryURL());
             Assert.IsNotNull(queryresult);
             Assert.AreNotSame(queryresult.Count(), 0);

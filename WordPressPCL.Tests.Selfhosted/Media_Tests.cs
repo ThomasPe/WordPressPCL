@@ -31,7 +31,7 @@ namespace WordPressPCL.Tests.Selfhosted
         {
             var path = Directory.GetCurrentDirectory() + "/Assets/cat.jpg";
             Stream s = File.OpenRead(path);
-            var mediaitem = await _clientAuth.Media.Create(s,"cat.jpg");
+            var mediaitem = await _clientAuth.Media.CreateAsync(s,"cat.jpg");
             Assert.IsNotNull(mediaitem);
         }
         [TestMethod]
@@ -39,7 +39,7 @@ namespace WordPressPCL.Tests.Selfhosted
         {
             var path = Directory.GetCurrentDirectory() + "/Assets/cat.jpg";
             
-            var mediaitem = await _clientAuth.Media.Create(path, "cat.jpg");
+            var mediaitem = await _clientAuth.Media.CreateAsync(path, "cat.jpg");
             Assert.IsNotNull(mediaitem);
 
             // Create a new post with media item as featured image
@@ -49,7 +49,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Content = new Content("Content PostCreate"),
                 FeaturedMedia = mediaitem.Id
             };
-            var createdPost = await _clientAuth.Posts.Create(post);
+            var createdPost = await _clientAuth.Posts.CreateAsync(post);
 
             Assert.AreEqual(createdPost.FeaturedMedia, mediaitem.Id);
         }
@@ -57,7 +57,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Media_Read()
         {
-            var media = await _client.Media.GetAll();
+            var media = await _client.Media.GetAllAsync();
             Assert.IsNotNull(media);
             Assert.AreNotEqual(media.Count(), 0);
         }
@@ -65,7 +65,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Media_Get()
         {
-            var media = await _client.Media.Get();
+            var media = await _client.Media.GetAsync();
             Assert.IsNotNull(media);
             Assert.AreNotEqual(media.Count(), 0);
         }
@@ -73,7 +73,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Media_Update()
         {
-            var media = await _clientAuth.Media.GetAll();
+            var media = await _clientAuth.Media.GetAllAsync();
             var file = media.FirstOrDefault();
             Assert.IsNotNull(file);
 
@@ -85,7 +85,7 @@ namespace WordPressPCL.Tests.Selfhosted
             var desc = $"This is a nice cat! {random.Next(0, 1000)}";
             file.Description.Raw = desc;
 
-            var fileUpdated = await _clientAuth.Media.Update(file);
+            var fileUpdated = await _clientAuth.Media.UpdateAsync(file);
             Assert.IsNotNull(fileUpdated);
             Assert.AreEqual(fileUpdated.Title.Raw, title);
             Assert.AreEqual(fileUpdated.Description.Raw, desc);
@@ -97,7 +97,7 @@ namespace WordPressPCL.Tests.Selfhosted
             // Create file
             var path = Directory.GetCurrentDirectory() + "/Assets/cat.jpg";
             Stream s = File.OpenRead(path);
-            var mediaitem = await _clientAuth.Media.Create(s, "cat.jpg");
+            var mediaitem = await _clientAuth.Media.CreateAsync(s, "cat.jpg");
             Assert.IsNotNull(mediaitem);
 
             // Delete file
@@ -115,7 +115,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 OrderBy = MediaOrderBy.Date,
                 Order = Order.ASC,
             };
-            var queryresult = await _clientAuth.Media.Query(queryBuilder);
+            var queryresult = await _clientAuth.Media.QueryAsync(queryBuilder);
             Assert.AreEqual("?page=1&per_page=15&orderby=date&media_type=image&order=asc&context=view", queryBuilder.BuildQueryURL());
             Assert.IsNotNull(queryresult);
             Assert.AreNotSame(queryresult.Count(), 0);
@@ -124,7 +124,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task MediaSizesInEmbeddedPost()
         {
-            var posts = await _client.Posts.GetAll(true);
+            var posts = await _client.Posts.GetAllAsync(true);
             var i = 0;
             foreach (var post in posts) {
                 if (post.Embedded.WpFeaturedmedia != null && post.Embedded.WpFeaturedmedia.Count() != 0)

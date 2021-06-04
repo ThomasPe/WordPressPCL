@@ -25,7 +25,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Comments_Create()
         {
-            var posts = await _clientAuth.Posts.GetAll();
+            var posts = await _clientAuth.Posts.GetAllAsync();
             var postId = posts.First().Id;
 
             var me = await _clientAuth.Users.GetCurrentUser();
@@ -41,19 +41,19 @@ namespace WordPressPCL.Tests.Selfhosted
                 AuthorEmail = "test@test.com",
                 AuthorName = me.Name
             };
-            var resultComment = await _clientAuth.Comments.Create(comment);
+            var resultComment = await _clientAuth.Comments.CreateAsync(comment);
             Assert.IsNotNull(resultComment);
 
             // Posting same comment twice should fail
             await Assert.ThrowsExceptionAsync<WPException>(async () =>
             {
-                var secondResultComment = await _clientAuth.Comments.Create(comment);
+                var secondResultComment = await _clientAuth.Comments.CreateAsync(comment);
             });
         }
         [TestMethod]
         public async Task Comments_Read()
         {
-            var comments = await _client.Comments.GetAll();
+            var comments = await _client.Comments.GetAllAsync();
 
             if (comments.Count() == 0)
             {
@@ -78,7 +78,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Comments_Get()
         {
-            var comments = await _client.Comments.Get();
+            var comments = await _client.Comments.GetAsync();
 
             if (comments.Count() == 0)
             {
@@ -96,7 +96,7 @@ namespace WordPressPCL.Tests.Selfhosted
             {
                 Authors = new int[] { me.Id }
             };
-            var comments = await _clientAuth.Comments.Query(queryBuilder, true);
+            var comments = await _clientAuth.Comments.QueryAsync(queryBuilder, true);
             var comment = comments.FirstOrDefault();
             if (comment == null)
             {
@@ -105,13 +105,13 @@ namespace WordPressPCL.Tests.Selfhosted
             var random = new Random();
             var title = $"TestComment {random.Next(0, 10000)}";
             comment.Content.Raw = title;
-            var commentUpdated = await _clientAuth.Comments.Update(comment);
+            var commentUpdated = await _clientAuth.Comments.UpdateAsync(comment);
             Assert.AreEqual(commentUpdated.Content.Raw, title);
         }
         [TestMethod]
         public async Task Comments_Delete()
         {
-            var posts = await _clientAuth.Posts.GetAll();
+            var posts = await _clientAuth.Posts.GetAllAsync();
             var postId = posts.First().Id;
 
             var me = await _clientAuth.Users.GetCurrentUser();
@@ -126,7 +126,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 AuthorEmail = "test@test.com",
                 AuthorName = me.Name
             };
-            var resultComment = await _clientAuth.Comments.Create(comment);
+            var resultComment = await _clientAuth.Comments.CreateAsync(comment);
 
             var response = await _clientAuth.Comments.Delete(resultComment.Id);
             Assert.IsTrue(response);
@@ -142,7 +142,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 OrderBy = CommentsOrderBy.Id,
                 Order = Order.DESC,
             };
-            var queryresult = await _clientAuth.Comments.Query(queryBuilder);
+            var queryresult = await _clientAuth.Comments.QueryAsync(queryBuilder);
             Assert.AreEqual("?page=1&per_page=15&orderby=id&order=desc&context=view", queryBuilder.BuildQueryURL());
             Assert.IsNotNull(queryresult);
             Assert.AreNotSame(queryresult.Count(), 0);
@@ -153,7 +153,7 @@ namespace WordPressPCL.Tests.Selfhosted
         public async Task Comments_Query_Pending()
         {
             // Create new pending comment
-            var posts = await _clientAuth.Posts.GetAll();
+            var posts = await _clientAuth.Posts.GetAllAsync();
             var postId = posts.First().Id;
             var me = await _clientAuth.Users.GetCurrentUser();
 
@@ -169,7 +169,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 AuthorName = me.Name,
                 Status = CommentStatus.Pending
             };
-            var resultComment = await _clientAuth.Comments.Create(comment);
+            var resultComment = await _clientAuth.Comments.CreateAsync(comment);
             Assert.IsNotNull(resultComment);
             Assert.AreEqual(CommentStatus.Pending, resultComment.Status);
 
@@ -182,7 +182,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Order = Order.DESC,
                 Statuses = new CommentStatus[] { CommentStatus.Pending }
             };
-            var queryresult = await _clientAuth.Comments.Query(queryBuilder, true);
+            var queryresult = await _clientAuth.Comments.QueryAsync(queryBuilder, true);
             var querystring = "?page=1&per_page=15&orderby=id&status=hold";
             Assert.AreEqual(querystring, queryBuilder.BuildQueryURL());
             Assert.IsNotNull(queryresult);
@@ -203,7 +203,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 Title = new Title("Title 1"),
                 Content = new Content("Content PostCreate")
             };
-            var createdPost = await _clientAuth.Posts.Create(post);
+            var createdPost = await _clientAuth.Posts.CreateAsync(post);
             Assert.IsNotNull(createdPost);
 
             for (int i = 0; i < 30; i++)
@@ -218,7 +218,7 @@ namespace WordPressPCL.Tests.Selfhosted
                     AuthorEmail = "test@test.com",
                     AuthorName = me.Name
                 };
-                var resultComment = await _clientAuth.Comments.Create(comment);
+                var resultComment = await _clientAuth.Comments.CreateAsync(comment);
                 Assert.IsNotNull(resultComment);
             }
 
@@ -227,7 +227,7 @@ namespace WordPressPCL.Tests.Selfhosted
             var comments = await nonauthclient.Comments.GetCommentsForPost(createdPost.Id);
             Assert.IsTrue(comments.Count() <= 10);
 
-            var allComments = await nonauthclient.Comments.GetAllCommentsForPost(createdPost.Id);
+            var allComments = await nonauthclient.Comments.GetAllCommentsForPostAsync(createdPost.Id);
             Assert.IsTrue(allComments.Count() > 20);
 
             // cleanup

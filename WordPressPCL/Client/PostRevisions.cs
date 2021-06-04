@@ -35,7 +35,7 @@ namespace WordPressPCL.Client
         /// <returns>Result of operation</returns>
         public Task<bool> Delete(int ID)
         {
-            return _httpHelper.DeleteRequest($"{_defaultPath}posts/{_postId}/{_methodPath}/{ID}?force=true");
+            return _httpHelper.DeleteRequestAsync($"{_defaultPath}posts/{_postId}/{_methodPath}/{ID}?force=true");
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace WordPressPCL.Client
         /// <param name="embed">include embed info</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>Latest PostRevisions</returns>
-        public Task<IEnumerable<PostRevision>> Get(bool embed = false, bool useAuth = true)
+        public Task<IEnumerable<PostRevision>> GetAsync(bool embed = false, bool useAuth = true)
         {
-            return _httpHelper.GetRequest<IEnumerable<PostRevision>>($"{_defaultPath}posts/{_postId}/{_methodPath}", embed, useAuth);
+            return _httpHelper.GetRequestAsync<IEnumerable<PostRevision>>($"{_defaultPath}posts/{_postId}/{_methodPath}", embed, useAuth);
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace WordPressPCL.Client
         /// <param name="embed">Include embed info</param>
         /// <param name="useAuth">Send request with authentication header</param>
         /// <returns>List of all result</returns>
-        public Task<IEnumerable<PostRevision>> GetAll(bool embed = false, bool useAuth = true)
+        public Task<IEnumerable<PostRevision>> GetAllAsync(bool embed = false, bool useAuth = true)
         {
-            return _httpHelper.GetRequest<IEnumerable<PostRevision>>($"{_defaultPath}posts/{_postId}/{_methodPath}", embed, useAuth);
+            return _httpHelper.GetRequestAsync<IEnumerable<PostRevision>>($"{_defaultPath}posts/{_postId}/{_methodPath}", embed, useAuth);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace WordPressPCL.Client
         /// <returns>Entity by Id</returns>
         public Task<PostRevision> GetByID(object ID, bool embed = false, bool useAuth = true)
         {
-            return _httpHelper.GetRequest<PostRevision>($"{_defaultPath}posts/{_postId}/{_methodPath}/{ID}", embed, useAuth);
+            return _httpHelper.GetRequestAsync<PostRevision>($"{_defaultPath}posts/{_postId}/{_methodPath}/{ID}", embed, useAuth);
         }
     }
 }

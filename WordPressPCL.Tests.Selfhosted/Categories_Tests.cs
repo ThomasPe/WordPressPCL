@@ -28,7 +28,7 @@ namespace WordPressPCL.Tests.Selfhosted
         {
             Random random = new Random();
             var name = $"TestCategory {random.Next(0, 10000)}";
-            var category = await _clientAuth.Categories.Create(new Category()
+            var category = await _clientAuth.Categories.CreateAsync(new Category()
             {
                 Name = name,
                 Description = "Test"
@@ -41,7 +41,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Categories_Read()
         {
-            var categories = await _client.Categories.GetAll();
+            var categories = await _client.Categories.GetAllAsync();
             Assert.IsNotNull(categories);
             Assert.AreNotEqual(categories.Count(), 0);
             CollectionAssert.AllItemsAreUnique(categories.Select(tag => tag.Id).ToList());
@@ -50,7 +50,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Categories_Get()
         {
-            var categories = await _client.Categories.Get();
+            var categories = await _client.Categories.GetAsync();
             Assert.IsNotNull(categories);
             Assert.AreNotEqual(categories.Count(), 0);
             CollectionAssert.AllItemsAreUnique(categories.Select(tag => tag.Id).ToList());
@@ -59,12 +59,12 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Categories_Update()
         {
-            var categories = await _clientAuth.Categories.GetAll();
+            var categories = await _clientAuth.Categories.GetAllAsync();
             var category = categories.First();
             Random random = new Random();
             var name = $"UpdatedCategory {random.Next(0, 10000)}";
             category.Name = name;
-            var updatedCategory = await _clientAuth.Categories.Update(category);
+            var updatedCategory = await _clientAuth.Categories.UpdateAsync(category);
             Assert.AreEqual(updatedCategory.Name, name);
             Assert.AreEqual(updatedCategory.Id, category.Id);
         }
@@ -74,7 +74,7 @@ namespace WordPressPCL.Tests.Selfhosted
         {
             Random random = new Random();
             var name = $"TestCategory {random.Next(0, 10000)}";
-            var category = await _clientAuth.Categories.Create(new Category()
+            var category = await _clientAuth.Categories.CreateAsync(new Category()
             {
                 Name = name,
                 Description = "Test"
@@ -86,7 +86,7 @@ namespace WordPressPCL.Tests.Selfhosted
             }
             var response = await _clientAuth.Categories.Delete(category.Id);
             Assert.IsTrue(response);
-            var categories = await _clientAuth.Categories.GetAll();
+            var categories = await _clientAuth.Categories.GetAllAsync();
             var c = categories.Where(x => x.Id == category.Id).ToList();
             Assert.AreEqual(c.Count, 0);
         }
@@ -101,7 +101,7 @@ namespace WordPressPCL.Tests.Selfhosted
                 OrderBy = TermsOrderBy.Id,
                 Order = Order.DESC,
             };
-            var queryresult = await _clientAuth.Categories.Query(queryBuilder);
+            var queryresult = await _clientAuth.Categories.QueryAsync(queryBuilder);
             Assert.AreEqual("?page=1&per_page=15&orderby=id&order=desc&context=view", queryBuilder.BuildQueryURL());
             Assert.IsNotNull(queryresult);
             Assert.AreNotSame(queryresult.Count(), 0);

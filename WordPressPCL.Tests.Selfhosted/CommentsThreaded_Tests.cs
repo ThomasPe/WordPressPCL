@@ -24,46 +24,46 @@ namespace WordPressPCL.Tests.Selfhosted
         public static async Task CommentsThreaded_SetupAsync(TestContext testContext)
         {
             _clientAuth = await ClientHelper.GetAuthenticatedWordPressClient(testContext);
-            var IsValidToken = await _clientAuth.IsValidJWToken();
+            var IsValidToken = await _clientAuth.IsValidJWTokenAsync();
             Assert.IsTrue(IsValidToken);
 
-            var post = await _clientAuth.Posts.Create(new Post()
+            var post = await _clientAuth.Posts.CreateAsync(new Post()
             {
                 Title = new Title("Title 1"),
                 Content = new Content("Content PostCreate")
             });
             await Task.Delay(1000);
-            var comment0 = await _clientAuth.Comments.Create(new Comment()
+            var comment0 = await _clientAuth.Comments.CreateAsync(new Comment()
             {
                 PostId = post.Id,
                 Content = new Content("orem ipsum dolor sit amet")
             });
 
-            var comment00 = await _clientAuth.Comments.Create(new Comment()
+            var comment00 = await _clientAuth.Comments.CreateAsync(new Comment()
             {
                 PostId = post.Id,
                 Content = new Content("r sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam non")
             });
 
-            var comment1 = await _clientAuth.Comments.Create(new Comment()
+            var comment1 = await _clientAuth.Comments.CreateAsync(new Comment()
             {
                 PostId = post.Id,
                 ParentId = comment0.Id,
                 Content = new Content("onsetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna ali")
             });
-            var comment2 = await _clientAuth.Comments.Create(new Comment()
+            var comment2 = await _clientAuth.Comments.CreateAsync(new Comment()
             {
                 PostId = post.Id,
                 ParentId = comment1.Id,
                 Content = new Content("ro eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem i")
             });
-            var comment3 = await _clientAuth.Comments.Create(new Comment()
+            var comment3 = await _clientAuth.Comments.CreateAsync(new Comment()
             {
                 PostId = post.Id,
                 ParentId = comment2.Id,
                 Content = new Content("tetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam e")
             });
-            var comment4 = await _clientAuth.Comments.Create(new Comment()
+            var comment4 = await _clientAuth.Comments.CreateAsync(new Comment()
             {
                 PostId = post.Id,
                 ParentId = comment1.Id,
@@ -81,7 +81,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task CommentsThreaded_Sort()
         {
-            var allComments = await _clientAuth.Comments.GetAllCommentsForPost(postid);
+            var allComments = await _clientAuth.Comments.GetAllCommentsForPostAsync(postid);
 
             var threaded = ThreadedCommentsHelper.GetThreadedComments(allComments);
             Assert.IsNotNull(threaded);
@@ -124,7 +124,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task CommentsThreaded_MaxDepth()
         {
-            var allComments = await _clientAuth.Comments.GetAllCommentsForPost(postid);
+            var allComments = await _clientAuth.Comments.GetAllCommentsForPostAsync(postid);
 
             var threaded = ThreadedCommentsHelper.GetThreadedComments(allComments, 1);
             Assert.IsNotNull(threaded);
@@ -146,7 +146,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task CommentsThreaded_Sort_Extension()
         {
-            var allComments = await _clientAuth.Comments.GetAllCommentsForPost(postid);
+            var allComments = await _clientAuth.Comments.GetAllCommentsForPostAsync(postid);
 
             Assert.IsTrue(allComments.Count() > 0);
             //ExtensionMethod
@@ -192,7 +192,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task CommentsThreaded_Sort_Extension_Desc()
         {
-            var allComments = await _clientAuth.Comments.GetAllCommentsForPost(postid);
+            var allComments = await _clientAuth.Comments.GetAllCommentsForPostAsync(postid);
             Assert.IsTrue(allComments.Count() > 0);
 
             var threaded = ThreadedCommentsHelper.ToThreaded(allComments, true);

@@ -40,7 +40,7 @@ namespace WordPressPCL.Tests.Selfhosted
             // Create empty post
             try
             {
-                var post = await _clientAuth.Posts.Create(new Post());
+                var post = await _clientAuth.Posts.CreateAsync(new Post());
             }
             catch (WPException wpex)
             {

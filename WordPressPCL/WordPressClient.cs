@@ -201,7 +201,7 @@ namespace WordPressPCL
         /// <returns>Site settings</returns>
         public Task<Settings> GetSettings()
         {
-            return _httpHelper.GetRequest<Settings>($"{_defaultPath}settings", false, true);
+            return _httpHelper.GetRequestAsync<Settings>($"{_defaultPath}settings", false, true);
         }
 
         /// <summary>
@@ -209,10 +209,10 @@ namespace WordPressPCL
         /// </summary>
         /// <param name="settings">Settings object</param>
         /// <returns>Updated settings</returns>
-        public async Task<Settings> UpdateSettings(Settings settings)
+        public async Task<Settings> UpdateSettingsAsync(Settings settings)
         {
             var postBody = new StringContent(JsonConvert.SerializeObject(settings), Encoding.UTF8, "application/json");
-            (var setting, _) = await _httpHelper.PostRequest<Settings>($"{_defaultPath}settings", postBody).ConfigureAwait(false);
+            (var setting, _) = await _httpHelper.PostRequestAsync<Settings>($"{_defaultPath}settings", postBody).ConfigureAwait(false);
             return setting;
         }
 
@@ -225,7 +225,7 @@ namespace WordPressPCL
         /// </summary>
         /// <param name="Username">username</param>
         /// <param name="Password">password</param>
-        public async Task RequestJWToken(string Username, string Password)
+        public async Task RequestJWTokenAsync(string Username, string Password)
         {
             var route = $"{_jwtPath}token";
             var formContent = new FormUrlEncodedContent(new[]
@@ -235,13 +235,13 @@ namespace WordPressPCL
                 });
             if (AuthMethod == AuthMethod.JWT)
             {
-                (JWTUser jwtUser, _) = await _httpHelper.PostRequest<JWTUser>(route, formContent, false).ConfigureAwait(false);
+                (JWTUser jwtUser, _) = await _httpHelper.PostRequestAsync<JWTUser>(route, formContent, false).ConfigureAwait(false);
                 _httpHelper.JWToken = jwtUser?.Token;
             }
             else if (AuthMethod == AuthMethod.JWTAuth)
             {
                 HttpResponsePreProcessing = RemoveEmptyData;
-                (JWTResponse jwtResponse, _) = await _httpHelper.PostRequest<JWTResponse>(route, formContent, false).ConfigureAwait(false);
+                (JWTResponse jwtResponse, _) = await _httpHelper.PostRequestAsync<JWTResponse>(route, formContent, false).ConfigureAwait(false);
                 HttpResponsePreProcessing = null;
                 _httpHelper.JWToken = jwtResponse?.Data?.Token;
             }
@@ -264,20 +264,20 @@ namespace WordPressPCL
         /// Check if token is valid
         /// </summary>
         /// <returns>Result of checking</returns>
-        public async Task<bool> IsValidJWToken()
+        public async Task<bool> IsValidJWTokenAsync()
         {
             var route = $"{_jwtPath}token/validate";
             try
             {
                 if (AuthMethod == AuthMethod.JWT)
                 {
-                    (JWTUser jwtUser, HttpResponseMessage repsonse) = await _httpHelper.PostRequest<JWTUser>(route, null, true).ConfigureAwait(false);
+                    (JWTUser jwtUser, HttpResponseMessage repsonse) = await _httpHelper.PostRequestAsync<JWTUser>(route, null, true).ConfigureAwait(false);
                     return repsonse.IsSuccessStatusCode;
                 }
                 else if (AuthMethod == AuthMethod.JWTAuth)
                 {
                     HttpResponsePreProcessing = RemoveEmptyData;
-                    (JWTResponse jwtResponse, _) = await _httpHelper.PostRequest<JWTResponse>(route, null, true).ConfigureAwait(false);
+                    (JWTResponse jwtResponse, _) = await _httpHelper.PostRequestAsync<JWTResponse>(route, null, true).ConfigureAwait(false);
                     HttpResponsePreProcessing = null;
                     return jwtResponse.Success;
                 }

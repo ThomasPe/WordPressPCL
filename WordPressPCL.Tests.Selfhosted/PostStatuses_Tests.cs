@@ -20,7 +20,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task PostStatuses_Read()
         {
-            var poststatuses = await _clientAuth.PostStatuses.GetAll();
+            var poststatuses = await _clientAuth.PostStatuses.GetAllAsync();
             Assert.IsNotNull(poststatuses);
             Assert.AreNotEqual(poststatuses.Count(), 0);
         }
@@ -28,7 +28,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task PostStatuses_Get()
         {
-            var poststatuses = await _clientAuth.PostStatuses.Get();
+            var poststatuses = await _clientAuth.PostStatuses.GetAsync();
             Assert.IsNotNull(poststatuses);
             Assert.AreNotEqual(poststatuses.Count(), 0);
         }

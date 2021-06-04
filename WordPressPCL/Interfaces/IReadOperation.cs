@@ -15,7 +15,7 @@ namespace WordPressPCL.Interfaces
         /// <param name="embed">Is use embed info</param>
         /// <param name="useAuth">Is use auth header</param>
         /// <returns>requested object</returns>
-        Task<IEnumerable<TClass>> Get(bool embed = false, bool useAuth = false);
+        Task<IEnumerable<TClass>> GetAsync(bool embed = false, bool useAuth = false);
 
         /// <summary>
         /// Get object by Id
@@ -32,6 +32,6 @@ namespace WordPressPCL.Interfaces
         /// <param name="embed">Is use embed info</param>
         /// <param name="useAuth">Is use auth header</param>
         /// <returns>List of objects</returns>
-        Task<IEnumerable<TClass>> GetAll(bool embed = false, bool useAuth = false);
+        Task<IEnumerable<TClass>> GetAllAsync(bool embed = false, bool useAuth = false);
     }
 }

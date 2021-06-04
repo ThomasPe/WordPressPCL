@@ -23,12 +23,12 @@ namespace WordPressPCL.Tests.Selfhosted
         public async Task List_Posts_QueryBuilder_Test_Pagination()
         {
             // Posts
-            var postsA = await _client.Posts.Query(new PostsQueryBuilder()
+            var postsA = await _client.Posts.QueryAsync(new PostsQueryBuilder()
             {
                 Page = 1,
                 PerPage = 2
             });
-            var postsB = await _client.Posts.Query(new PostsQueryBuilder()
+            var postsB = await _client.Posts.QueryAsync(new PostsQueryBuilder()
             {
                 Page = 2,
                 PerPage = 2
@@ -45,7 +45,7 @@ namespace WordPressPCL.Tests.Selfhosted
         public async Task List_Posts_QueryBuilder_After()
         {
             // Posts
-            var posts = await _client.Posts.Query(new PostsQueryBuilder { After = System.DateTime.Parse("2017-05-22T13:41:09") });
+            var posts = await _client.Posts.QueryAsync(new PostsQueryBuilder { After = System.DateTime.Parse("2017-05-22T13:41:09") });
             Assert.IsNotNull(posts);
         }
     }

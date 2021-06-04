@@ -24,7 +24,7 @@ namespace WordPressPCL.Hosted
             // Initialize
             Assert.IsNotNull(_client);
             // Posts
-            var posts = await _client.Posts.GetAll();
+            var posts = await _client.Posts.GetAllAsync();
             Assert.AreNotEqual(posts.Count(), 0);
             Assert.IsNotNull(posts);
         }
@@ -33,7 +33,7 @@ namespace WordPressPCL.Hosted
         public async Task Hosted_GetFirstPostTest()
         {
             // Initialize
-            var posts = await _client.Posts.GetAll();
+            var posts = await _client.Posts.GetAllAsync();
             var post = await _client.Posts.GetByID(posts.First().Id);
             Assert.IsTrue(posts.First().Id == post.Id);
             Assert.IsTrue(!String.IsNullOrEmpty(posts.First().Content.Rendered));
@@ -68,7 +68,7 @@ namespace WordPressPCL.Hosted
         [TestMethod]
         public async Task Hosted_GetPostsByTag()
         {
-            var tags = await _client.Tags.Get();
+            var tags = await _client.Tags.GetAsync();
             int tagId = tags.FirstOrDefault().Id;
 
             // Initialize

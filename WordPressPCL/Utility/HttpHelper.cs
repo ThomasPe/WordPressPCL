@@ -89,7 +89,7 @@ namespace WordPressPCL.Utility
             };
         }
 
-        internal async Task<TClass> GetRequest<TClass>(string route, bool embed, bool isAuthRequired = false)
+        internal async Task<TClass> GetRequestAsync<TClass>(string route, bool embed, bool isAuthRequired = false)
             where TClass : class
         {
             string embedParam = "";
@@ -123,7 +123,7 @@ namespace WordPressPCL.Utility
             }
         }
 
-        internal async Task<(TClass, HttpResponseMessage)> PostRequest<TClass>(string route, HttpContent postBody, bool isAuthRequired = true)
+        internal async Task<(TClass, HttpResponseMessage)> PostRequestAsync<TClass>(string route, HttpContent postBody, bool isAuthRequired = true)
             where TClass : class
         {
 
@@ -151,7 +151,7 @@ namespace WordPressPCL.Utility
             }
         }
 
-        internal async Task<bool> DeleteRequest(string route, bool isAuthRequired = true)
+        internal async Task<bool> DeleteRequestAsync(string route, bool isAuthRequired = true)
         {
             HttpResponseMessage response;
             using (var requestMessage = new HttpRequestMessage(HttpMethod.Delete, $"{_WordpressURI}{route}"))

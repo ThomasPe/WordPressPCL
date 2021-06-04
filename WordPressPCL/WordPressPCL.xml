@@ -37,7 +37,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>List of comments for post</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Comments.GetAllCommentsForPost(System.Int32,System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Comments.GetAllCommentsForPostAsync(System.Int32,System.Boolean,System.Boolean)">
             <summary>
             Get all comments for Post
             </summary>
@@ -90,7 +90,7 @@
             <param name="methodPath">path to endpoint, EX. posts</param>
             <param name="forceDeletion">is objects must be force deleted</param>
         </member>
-        <member name="M:WordPressPCL.Client.CRUDOperation`2.Create(`0)">
+        <member name="M:WordPressPCL.Client.CRUDOperation`2.CreateAsync(`0)">
             <summary>
             Create Entity
             </summary>
@@ -104,7 +104,7 @@
             <param name="ID">Entity Id</param>
             <returns>Result of operation</returns>
         </member>
-        <member name="M:WordPressPCL.Client.CRUDOperation`2.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.CRUDOperation`2.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -112,7 +112,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Entity by Id</returns>
         </member>
-        <member name="M:WordPressPCL.Client.CRUDOperation`2.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.CRUDOperation`2.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -129,7 +129,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Entity by Id</returns>
         </member>
-        <member name="M:WordPressPCL.Client.CRUDOperation`2.Query(`1,System.Boolean)">
+        <member name="M:WordPressPCL.Client.CRUDOperation`2.QueryAsync(`1,System.Boolean)">
             <summary>
             Create a parametrized query and get a result
             </summary>
@@ -137,7 +137,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>List of filtered result</returns>
         </member>
-        <member name="M:WordPressPCL.Client.CRUDOperation`2.Update(`0)">
+        <member name="M:WordPressPCL.Client.CRUDOperation`2.UpdateAsync(`0)">
             <summary>
             Update Entity
             </summary>
@@ -155,7 +155,7 @@
             </summary>
             <param name="httpHelper">HttpHelper class to operate with Http methods</param>
         </member>
-        <member name="M:WordPressPCL.Client.CustomRequest.Create``2(System.String,``0)">
+        <member name="M:WordPressPCL.Client.CustomRequest.CreateAsync``2(System.String,``0)">
             <summary>
             Create object
             </summary>
@@ -204,7 +204,7 @@
             <param name="HttpHelper">reference to HttpHelper class for interaction with HTTP</param>
             <param name="defaultPath">path to site, EX. http://demo.com/wp-json/ </param>
         </member>
-        <member name="M:WordPressPCL.Client.Media.Create(System.IO.Stream,System.String,System.String)">
+        <member name="M:WordPressPCL.Client.Media.CreateAsync(System.IO.Stream,System.String,System.String)">
             <summary>
             Create Media entity with attachment
             </summary>
@@ -220,7 +220,7 @@
             <param name="ID">Entity Id</param>
             <returns>Result of operation</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Media.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Media.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -228,7 +228,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Latest media items</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Media.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Media.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -245,7 +245,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Entity by Id</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Media.Query(WordPressPCL.Utility.MediaQueryBuilder,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Media.QueryAsync(WordPressPCL.Utility.MediaQueryBuilder,System.Boolean)">
             <summary>
             Create a parametrized query and get a result
             </summary>
@@ -253,7 +253,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>List of filtered result</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Media.Update(WordPressPCL.Models.MediaItem)">
+        <member name="M:WordPressPCL.Client.Media.UpdateAsync(WordPressPCL.Models.MediaItem)">
             <summary>
             Update Entity
             </summary>
@@ -318,7 +318,7 @@
             <param name="ID">Entity Id</param>
             <returns>Result of operation</returns>
         </member>
-        <member name="M:WordPressPCL.Client.PostRevisions.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.PostRevisions.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -326,7 +326,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Latest PostRevisions</returns>
         </member>
-        <member name="M:WordPressPCL.Client.PostRevisions.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.PostRevisions.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -426,7 +426,7 @@
             <param name="httpHelper">reference to HttpHelper class for interaction with HTTP</param>
             <param name="defaultPath">path to site, EX. http://demo.com/wp-json/ </param>
         </member>
-        <member name="M:WordPressPCL.Client.PostStatuses.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.PostStatuses.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest Post Statuses
             </summary>
@@ -434,7 +434,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Entity by Id</returns>
         </member>
-        <member name="M:WordPressPCL.Client.PostStatuses.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.PostStatuses.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -463,7 +463,7 @@
             <param name="httpHelper">reference to HttpHelper class for interaction with HTTP</param>
             <param name="defaultPath">path to site, EX. http://demo.com/wp-json/ </param>
         </member>
-        <member name="M:WordPressPCL.Client.PostTypes.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.PostTypes.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -471,7 +471,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>List of latest PostTypes</returns>
         </member>
-        <member name="M:WordPressPCL.Client.PostTypes.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.PostTypes.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -512,7 +512,7 @@
             <param name="httpHelper">reference to HttpHelper class for interaction with HTTP</param>
             <param name="defaultPath">path to site, EX. http://demo.com/wp-json/ </param>
         </member>
-        <member name="M:WordPressPCL.Client.Taxonomies.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Taxonomies.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -520,7 +520,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Get latest taxonomies</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Taxonomies.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Taxonomies.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -537,7 +537,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Entity by Id</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Taxonomies.Query(WordPressPCL.Utility.TaxonomiesQueryBuilder,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Taxonomies.QueryAsync(WordPressPCL.Utility.TaxonomiesQueryBuilder,System.Boolean)">
             <summary>
             Create a parametrized query and get a result
             </summary>
@@ -557,14 +557,14 @@
             <param name="HttpHelper">reference to HttpHelper class for interaction with HTTP</param>
             <param name="defaultPath">path to site, EX. http://demo.com/wp-json/ </param>
         </member>
-        <member name="M:WordPressPCL.Client.Users.Create(WordPressPCL.Models.User)">
+        <member name="M:WordPressPCL.Client.Users.CreateAsync(WordPressPCL.Models.User)">
             <summary>
             Create Entity
             </summary>
             <param name="Entity">Entity object</param>
             <returns>Created object</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Users.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Users.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -572,7 +572,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Get latest users</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Users.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Users.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get All
             </summary>
@@ -589,7 +589,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>Entity by Id</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Users.Query(WordPressPCL.Utility.UsersQueryBuilder,System.Boolean)">
+        <member name="M:WordPressPCL.Client.Users.QueryAsync(WordPressPCL.Utility.UsersQueryBuilder,System.Boolean)">
             <summary>
             Create a parametrized query and get a result
             </summary>
@@ -597,7 +597,7 @@
             <param name="useAuth">Send request with authentication header</param>
             <returns>List of filtered result</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Users.Update(WordPressPCL.Models.User)">
+        <member name="M:WordPressPCL.Client.Users.UpdateAsync(WordPressPCL.Models.User)">
             <summary>
             Update Entity
             </summary>
@@ -626,7 +626,7 @@
             <param name="ReassignUser">User object for reassign</param>
             <returns>Result of operation</returns>
         </member>
-        <member name="M:WordPressPCL.Client.Users.CreateApplicationPassword(System.String,System.String)">
+        <member name="M:WordPressPCL.Client.Users.CreateApplicationPasswordAsync(System.String,System.String)">
             <summary>
             Create a new Application Password
             </summary>
@@ -647,7 +647,7 @@
             </summary>
             <typeparam name="TClass">return class type</typeparam>
         </member>
-        <member name="M:WordPressPCL.Interfaces.ICreateOperation`1.Create(`0)">
+        <member name="M:WordPressPCL.Interfaces.ICreateOperation`1.CreateAsync(`0)">
             <summary>
             Create object
             </summary>
@@ -673,7 +673,7 @@
             <typeparam name="TClass">return class type</typeparam>
             <typeparam name="QClass">Query Builder class</typeparam>
         </member>
-        <member name="M:WordPressPCL.Interfaces.IQueryOperation`2.Query(`1,System.Boolean)">
+        <member name="M:WordPressPCL.Interfaces.IQueryOperation`2.QueryAsync(`1,System.Boolean)">
             <summary>
             Execute query
             </summary>
@@ -687,7 +687,7 @@
             </summary>
             <typeparam name="TClass">return class type</typeparam>
         </member>
-        <member name="M:WordPressPCL.Interfaces.IReadOperation`1.Get(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Interfaces.IReadOperation`1.GetAsync(System.Boolean,System.Boolean)">
             <summary>
             Get latest
             </summary>
@@ -704,7 +704,7 @@
             <param name="useAuth">Is use auth header</param>
             <returns>requested object</returns>
         </member>
-        <member name="M:WordPressPCL.Interfaces.IReadOperation`1.GetAll(System.Boolean,System.Boolean)">
+        <member name="M:WordPressPCL.Interfaces.IReadOperation`1.GetAllAsync(System.Boolean,System.Boolean)">
             <summary>
             Get all objects
             </summary>
@@ -718,7 +718,7 @@
             </summary>
             <typeparam name="TClass">return class type</typeparam>
         </member>
-        <member name="M:WordPressPCL.Interfaces.IUpdateOperation`1.Update(`0)">
+        <member name="M:WordPressPCL.Interfaces.IUpdateOperation`1.UpdateAsync(`0)">
             <summary>
             Update entity method
             </summary>
@@ -3951,14 +3951,14 @@
             </summary>
             <returns>Site settings</returns>
         </member>
-        <member name="M:WordPressPCL.WordPressClient.UpdateSettings(WordPressPCL.Models.Settings)">
+        <member name="M:WordPressPCL.WordPressClient.UpdateSettingsAsync(WordPressPCL.Models.Settings)">
             <summary>
             Update site settings
             </summary>
             <param name="settings">Settings object</param>
             <returns>Updated settings</returns>
         </member>
-        <member name="M:WordPressPCL.WordPressClient.RequestJWToken(System.String,System.String)">
+        <member name="M:WordPressPCL.WordPressClient.RequestJWTokenAsync(System.String,System.String)">
             <summary>
             Perform authentication by JWToken
             </summary>
@@ -3970,7 +3970,7 @@
             Forget the JWT Auth Token, won't invalidate it serverside though
             </summary>
         </member>
-        <member name="M:WordPressPCL.WordPressClient.IsValidJWToken">
+        <member name="M:WordPressPCL.WordPressClient.IsValidJWTokenAsync">
             <summary>
             Check if token is valid
             </summary>
@@ -4001,9 +4001,7 @@
             </summary>
             <param name="applictionPassword"></param>
         </member>
-    </members>
-</doc>
-   <member name="M:WordPressPCL.WordPressClient.GetToken">
+        <member name="M:WordPressPCL.WordPressClient.GetToken">
             <summary>
             Gets the JWToken from the client
             </summary>

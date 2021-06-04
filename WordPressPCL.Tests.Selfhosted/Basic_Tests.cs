@@ -26,7 +26,7 @@ namespace WordPressPCL.Tests.Selfhosted
             // Initialize
             Assert.IsNotNull(_client);
             // Posts
-            var posts = await _client.Posts.GetAll();
+            var posts = await _client.Posts.GetAllAsync();
             Assert.IsNotNull(posts);
         }
 
@@ -34,7 +34,7 @@ namespace WordPressPCL.Tests.Selfhosted
         public async Task GetFirstPostTest()
         {
             // Initialize
-            var posts = await _client.Posts.GetAll();
+            var posts = await _client.Posts.GetAllAsync();
             var post = await _client.Posts.GetByID(posts.First().Id);
             Assert.IsTrue(posts.First().Id == post.Id);
             Assert.IsTrue(!String.IsNullOrEmpty(posts.First().Content.Rendered));
@@ -118,7 +118,7 @@ namespace WordPressPCL.Tests.Selfhosted
         [TestMethod]
         public async Task Authorize()
         {
-            var validToken = await _clientAuth.IsValidJWToken();
+            var validToken = await _clientAuth.IsValidJWTokenAsync();
             Assert.IsTrue(validToken);
         }
     }

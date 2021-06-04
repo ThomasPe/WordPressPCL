@@ -23,7 +23,7 @@ namespace WordPressPCL.Tests.Selfhosted
         {
             var id = await CreatePostWithRevision();
             var revisionsclient = _clientAuth.Posts.Revisions(id);
-            var revisions = await revisionsclient.GetAll();
+            var revisions = await revisionsclient.GetAllAsync();
             Assert.AreNotEqual(revisions.Count(), 0);
         }
 
@@ -32,7 +32,7 @@ namespace WordPressPCL.Tests.Selfhosted
         {
             var id = await CreatePostWithRevision();
             var revisionsclient = _clientAuth.Posts.Revisions(id);
-            var revisions = await revisionsclient.Get();
+            var revisions = await revisionsclient.GetAsync();
             Assert.AreNotEqual(revisions.Count(), 0);
         }
 
@@ -43,7 +43,7 @@ namespace WordPressPCL.Tests.Selfhosted
             var id = await CreatePostWithRevision();
 
             var revisionsclient = _clientAuth.Posts.Revisions(id);
-            var revisions = await revisionsclient.GetAll();
+            var revisions = await revisionsclient.GetAllAsync();
             Assert.AreNotEqual(revisions.Count(), 0);
             var res = await revisionsclient.Delete(revisions.First().Id);
             Assert.IsTrue(res);
@@ -56,9 +56,9 @@ namespace WordPressPCL.Tests.Selfhosted
                 Title = new Title("Title 1"),
                 Content = new Content("Content PostCreate"),
             };
-            var createdPost = await _clientAuth.Posts.Create(post);
+            var createdPost = await _clientAuth.Posts.CreateAsync(post);
             createdPost.Content.Raw = "Updated Content";
-            var updatedPost = await _clientAuth.Posts.Update(createdPost);
+            var updatedPost = await _clientAuth.Posts.UpdateAsync(createdPost);
             return updatedPost.Id;
         }
     }
